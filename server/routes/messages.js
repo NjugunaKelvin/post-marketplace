@@ -4,6 +4,8 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 
+import { v4 as uuidv4 } from 'uuid';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -18,6 +20,40 @@ const readMessages = () => {
 const writeMessages = (messages) => {
   writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
 };
+
+// Create a new message or offer
+router.post('/', (req, res) => {
+  try {
+    const { itemId, senderId, senderName, content, type, price, originalPrice } = req.body;
+    
+    if (!itemId || !senderId || !content) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    const messages = readMessages();
+    const newMessage = {
+      id: uuidv4(),
+      itemId,
+      senderId,
+      senderName: senderName || 'Anonymous',
+      content,
+      type: type || 'text',
+      price: price ? parseFloat(price) : null,
+      originalPrice: originalPrice ? parseFloat(originalPrice) : null,
+      status: type === 'offer' ? 'pending' : null,
+      timestamp: new Date().toISOString(),
+      readBy: [senderId]
+    };
+    
+    messages.push(newMessage);
+    writeMessages(messages);
+    
+    res.status(201).json(newMessage);
+  } catch (error) {
+    console.error('Error creating message:', error);
+    res.status(500).json({ error: 'Failed to send message' });
+  }
+});
 
 
 // Get new messages after timestamp (for real-time updates)
