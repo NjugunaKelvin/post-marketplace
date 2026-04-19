@@ -1,0 +1,13 @@
+node_modules
+dist
+.env
+server/public/*.js
+server/public/*.css
+server/data/*.json
+!server/data/items.json
+!server/data/users.json
+!server/data/messages.json
+.vscode
+.idea
+*.log
+.DS_Store
