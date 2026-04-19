@@ -164,16 +164,24 @@ app.use('/api/users', usersRouter);
 app.use('/api/messages', messagesRouter);
 
 // Main Marketplace Route
-app.get('/', (req, res) => {
-  // In a real app, I'd determine components based on user state or route
-  res.render('index', { 
-    title: 'Social Marketplace',
-    components: [
-      { name: 'market-header', props: '' },
-      { name: 'market-search', props: '' },
-      { name: 'market-list', props: '' }
-    ]
-  });
+app.get(['/', '/messages', '/activity'], (req, res) => {
+  const path = req.path;
+  let title = 'Social Marketplace';
+  let components = [{ name: 'market-header', props: '' }];
+
+  if (path === '/messages') {
+    title = 'Your Messages | Post.';
+    components.push({ name: 'market-inbox', props: '' });
+  } else if (path === '/activity') {
+    title = 'Activity | Post.';
+    // We could add an activity component here later
+  } else {
+    // Default home view
+    components.push({ name: 'market-search', props: '' });
+    components.push({ name: 'market-list', props: '' });
+  }
+
+  res.render('index', { title, components });
 });
 
 // Health check endpoint

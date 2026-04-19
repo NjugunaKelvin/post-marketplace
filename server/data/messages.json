@@ -6,6 +6,30 @@
     "senderName": "ToyTrader",
     "content": "Is this comic still available?",
     "type": "text",
-    "timestamp": "2026-04-12T10:56:02.346Z"
+    "timestamp": "2026-04-18T14:38:03.000Z"
+  },
+  {
+    "id": "msg2",
+    "itemId": "1",
+    "senderId": "user1",
+    "senderName": "ComicCollector",
+    "content": "Yes, it is! Interested?",
+    "type": "text",
+    "timestamp": "2026-04-18T15:38:03.000Z"
+  },
+  {
+    "id": "deca0be8-870d-4126-9ca5-a6b554fb9650",
+    "itemId": "2",
+    "senderId": "user2",
+    "senderName": "ToyTrader",
+    "content": "hello",
+    "type": "text",
+    "price": null,
+    "originalPrice": 150,
+    "status": null,
+    "timestamp": "2026-04-19T12:29:07.115Z",
+    "readBy": [
+      "user2"
+    ]
   }
 ]
