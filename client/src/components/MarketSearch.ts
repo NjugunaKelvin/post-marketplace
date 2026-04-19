@@ -7,6 +7,15 @@ export class MarketSearch extends LitElement {
     return this;
   }
 
+  handleInput(e: InputEvent) {
+    const input = e.target as HTMLInputElement;
+    window.dispatchEvent(new CustomEvent('market-search', {
+      detail: { query: input.value },
+      bubbles: true,
+      composed: true
+    }));
+  }
+
   render() {
     return html`
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -15,6 +24,7 @@ export class MarketSearch extends LitElement {
             type="text" 
             placeholder="Search for rare collectibles..." 
             class="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            @input="${this.handleInput}"
           />
           <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
