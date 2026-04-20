@@ -3,31 +3,58 @@
     "id": "msg1",
     "itemId": "1",
     "senderId": "user2",
-    "senderName": "ToyTrader",
-    "content": "Is this comic still available?",
+    "senderName": "NairobiAntiques",
+    "content": "Is this Maasai shield still available?",
     "type": "text",
-    "timestamp": "2026-04-18T14:38:03.000Z"
+    "timestamp": "2026-04-19T15:07:24.988Z"
   },
   {
     "id": "msg2",
     "itemId": "1",
     "senderId": "user1",
-    "senderName": "ComicCollector",
+    "senderName": "CurioMaster",
     "content": "Yes, it is! Interested?",
     "type": "text",
-    "timestamp": "2026-04-18T15:38:03.000Z"
+    "timestamp": "2026-04-19T15:14:04.988Z"
   },
   {
-    "id": "deca0be8-870d-4126-9ca5-a6b554fb9650",
-    "itemId": "2",
+    "id": "msg3",
+    "itemId": "1",
+    "senderId": "user2",
+    "senderName": "NairobiAntiques",
+    "content": "14000",
+    "type": "offer",
+    "price": 14000,
+    "originalPrice": 15000,
+    "status": "pending",
+    "timestamp": "2026-04-19T15:30:44.988Z"
+  },
+  {
+    "id": "26e67813-57e0-4a9c-aed2-2e5a2d2f2eaf",
+    "itemId": "8",
     "senderId": "user2",
     "senderName": "ToyTrader",
     "content": "hello",
     "type": "text",
     "price": null,
-    "originalPrice": 150,
+    "originalPrice": 45000,
     "status": null,
-    "timestamp": "2026-04-19T12:29:07.115Z",
+    "timestamp": "2026-04-20T15:08:50.397Z",
+    "readBy": [
+      "user2"
+    ]
+  },
+  {
+    "id": "89a11a23-2025-4a3d-9394-7164c1bf5bc5",
+    "itemId": "8",
+    "senderId": "user2",
+    "senderName": "ToyTrader",
+    "content": "is that available",
+    "type": "text",
+    "price": null,
+    "originalPrice": 45000,
+    "status": null,
+    "timestamp": "2026-04-20T15:08:57.397Z",
     "readBy": [
       "user2"
     ]

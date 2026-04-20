@@ -14,10 +14,9 @@ export class MarketChat extends LitElement {
 
   private pollInterval: any = null;
 
-  // Mocking current user for demonstration
   private currentUser = {
     id: 'user2',
-    name: 'ToyTrader'
+    name: 'NairobiAntiques'
   };
 
   protected createRenderRoot() {
@@ -120,9 +119,7 @@ export class MarketChat extends LitElement {
 
   async handleAcceptOffer(msg: any) {
     try {
-      // In a real app, this would update the message status in the DB
-      // For now, we'll send a system message and trigger the payment state
-      await this.sendMessage(`Offer of ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(msg.price)} accepted! You can now proceed to checkout.`, 'system');
+      await this.sendMessage(`Offer of KSh ${msg.price.toLocaleString('en-US')} accepted! You can now proceed to checkout.`, 'system');
     } catch (err) {
       console.error('Failed to accept offer:', err);
     }
@@ -175,54 +172,54 @@ export class MarketChat extends LitElement {
 
     return html`
       <div class="fixed inset-0 z-[100] flex justify-end">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="${this.closeChat}"></div>
-        <div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+        <div class="absolute inset-0 bg-[#0f111a]/80 backdrop-blur-md" @click="${this.closeChat}"></div>
+        <div class="relative w-full max-w-md bg-[#1a1d2e] h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col animate-in slide-in-from-right duration-300">
           
-          <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0">
-            <div class="flex items-center gap-3">
-              <button @click="${this.closeChat}" class="p-2 -ml-2 text-slate-400 hover:text-slate-600">
+          <div class="p-5 border-b border-white/10 flex items-center justify-between bg-white/5 backdrop-blur-xl sticky top-0">
+            <div class="flex items-center gap-4">
+              <button @click="${this.closeChat}" class="p-2 -ml-2 text-slate-400 hover:text-white transition-colors hover:bg-white/5 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
               <div>
-                <h3 class="font-bold text-slate-900 leading-tight">${this.item?.name}</h3>
-                <p class="text-xs text-slate-500">${isSeller ? 'Your Listing' : 'Messaging ' + this.item?.sellerName}</p>
+                <h3 class="font-bold text-white text-lg leading-tight tracking-tight">${this.item?.name}</h3>
+                <p class="text-xs text-amber-500/80 font-medium">${isSeller ? 'Your Listing' : 'Messaging ' + this.item?.sellerName}</p>
               </div>
             </div>
             ${this.item?.paymentStatus === 'paid' && isSeller ? html`
-              <button @click="${this.handleConfirmSale}" class="bg-emerald-600 text-white text-[10px] font-bold px-3 py-2 rounded-lg hover:bg-emerald-700 animate-pulse">
+              <button @click="${this.handleConfirmSale}" class="bg-amber-500 text-[#0f111a] text-[10px] font-black px-4 py-2 rounded-xl hover:bg-amber-400 animate-pulse tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.4)]">
                 CONFIRM SALE
               </button>
             ` : ''}
           </div>
 
-          <div id="message-container" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+          <div id="message-container" class="flex-1 overflow-y-auto p-5 space-y-5 bg-transparent">
             ${this.messages.length === 0 ? html`
               <div class="text-center py-10">
-                <p class="text-sm text-slate-400 font-medium italic">Start the conversation...</p>
+                <p class="text-sm text-slate-500 font-medium italic">Start the conversation...</p>
               </div>
             ` : this.messages.map(msg => this.renderMessage(msg, isSeller))}
           </div>
 
-          <div class="p-4 border-t border-slate-100 bg-white">
+          <div class="p-5 border-t border-white/10 bg-white/5 backdrop-blur-xl">
             ${this.item?.paymentStatus === 'paid' ? html`
-              <div class="bg-emerald-50 text-emerald-700 p-3 rounded-xl text-center font-bold text-sm">
+              <div class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 p-4 rounded-2xl text-center font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                 Payment Received. Waiting for seller confirmation.
               </div>
             ` : this.showOfferForm ? this.renderOfferForm() : html`
-              <div class="flex items-center gap-2 mb-3">
+              <div class="flex items-center gap-2 mb-4">
                  ${!isSeller ? html`
-                   <button @click="${() => this.showOfferForm = true}" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full hover:bg-indigo-100">
+                   <button @click="${() => this.showOfferForm = true}" class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-4 py-2 rounded-full hover:bg-amber-500/20 transition-all uppercase tracking-widest">
                      Propose Price
                    </button>
                  ` : ''}
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-3">
                 <input 
                   type="text" 
                   placeholder="Type a message..."
-                  class="flex-1 bg-slate-100 border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500"
+                  class="flex-1 bg-[#0f111a] border border-white/10 text-white placeholder-slate-500 rounded-2xl px-5 py-3 text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all shadow-inner"
                   .value="${this.newMessage}"
                   @input="${(e: any) => this.newMessage = e.target.value}"
                   @keypress="${(e: KeyboardEvent) => e.key === 'Enter' && this.sendMessage(this.newMessage)}"
@@ -230,9 +227,9 @@ export class MarketChat extends LitElement {
                 <button 
                   @click="${() => this.sendMessage(this.newMessage)}"
                   ?disabled="${this.isSending || !this.newMessage.trim()}"
-                  class="bg-indigo-600 text-white p-2.5 rounded-xl disabled:opacity-50 active:scale-95 transition-transform"
+                  class="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-3 rounded-2xl disabled:opacity-50 active:scale-95 transition-transform shadow-[0_0_15px_rgba(245,158,11,0.3)] disabled:shadow-none hover:shadow-[0_0_20px_rgba(245,158,11,0.5)]"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
                   </svg>
                 </button>
@@ -250,8 +247,8 @@ export class MarketChat extends LitElement {
 
     if (isSystem) {
       return html`
-        <div class="flex justify-center my-2">
-          <div class="bg-indigo-50 text-indigo-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-indigo-100 italic">
+        <div class="flex justify-center my-3">
+          <div class="bg-amber-500/10 text-amber-500 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.1)]">
             ${msg.content}
           </div>
         </div>
@@ -259,29 +256,29 @@ export class MarketChat extends LitElement {
     }
 
     return html`
-      <div class="flex ${isMe ? 'justify-end' : 'justify-start'}">
-        <div class="max-w-[85%] ${isMe ? 'bg-indigo-600 text-white rounded-2xl rounded-tr-none shadow-indigo-100' : 'bg-white text-slate-800 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm'} p-3.5 relative">
+      <div class="flex ${isMe ? 'justify-end' : 'justify-start'} group/msg">
+        <div class="max-w-[85%] ${isMe ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-3xl rounded-tr-[4px] shadow-[0_4px_15px_rgba(245,158,11,0.3)]' : 'bg-white/10 backdrop-blur-md text-white rounded-3xl rounded-tl-[4px] border border-white/10 shadow-lg'} p-4 relative transition-transform hover:-translate-y-0.5">
           ${msg.type === 'offer' ? html`
-            <div class="mb-2 p-3 rounded-xl ${isMe ? 'bg-white/10' : 'bg-slate-50'} border ${isMe ? 'border-white/20' : 'border-slate-100'}">
-              <span class="text-[9px] font-black uppercase ${isMe ? 'text-indigo-200' : 'text-slate-400'}">Price Proposal</span>
-              <div class="text-xl font-black">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(msg.price)}</div>
+            <div class="mb-3 p-4 rounded-2xl ${isMe ? 'bg-white/20' : 'bg-[#0f111a]/50'} border ${isMe ? 'border-white/30' : 'border-white/5'}">
+              <span class="text-[9px] font-black uppercase tracking-widest ${isMe ? 'text-amber-100' : 'text-slate-400'}">Price Proposal</span>
+              <div class="text-2xl font-black mt-1 drop-shadow-sm">KSh ${msg.price.toLocaleString('en-US')}</div>
               
               ${!isMe && isSeller ? html`
-                <div class="flex gap-2 mt-3">
-                   <button @click="${() => this.handleAcceptOffer(msg)}" class="flex-1 bg-indigo-600 text-white text-[10px] font-black py-1.5 rounded-lg hover:bg-indigo-700 shadow-sm">ACCEPT</button>
-                   <button class="flex-1 bg-white text-slate-400 text-[10px] font-black py-1.5 rounded-lg hover:text-red-500 border border-slate-200">DECLINE</button>
+                <div class="flex gap-2 mt-4">
+                   <button @click="${() => this.handleAcceptOffer(msg)}" class="flex-1 bg-amber-500 text-[#0f111a] text-[10px] font-black py-2 rounded-xl hover:bg-amber-400 hover:shadow-[0_0_15px_rgba(245,158,11,0.5)] transition-all">ACCEPT</button>
+                   <button class="flex-1 bg-white/5 text-slate-300 text-[10px] font-black py-2 rounded-xl hover:text-red-400 border border-white/10 hover:border-red-400/50 transition-all">DECLINE</button>
                 </div>
               ` : ''}
 
               ${isMe && msg.content.includes('accepted') && !isSeller ? html`
-                <button @click="${this.handleCheckout}" class="w-full mt-3 bg-white text-indigo-600 text-[10px] font-black py-2 rounded-lg hover:bg-indigo-50 shadow-sm uppercase tracking-tighter">
+                <button @click="${this.handleCheckout}" class="w-full mt-4 bg-white text-orange-600 text-xs font-black py-3 rounded-xl hover:bg-white/90 shadow-lg uppercase tracking-widest transition-all">
                   Proceed to Checkout
                 </button>
               ` : ''}
             </div>
           ` : ''}
-          <p class="text-sm leading-relaxed">${msg.content}</p>
-          <div class="text-[9px] mt-2 opacity-60 font-medium ${isMe ? 'text-right' : 'text-left'}">
+          <p class="text-[15px] leading-relaxed font-medium drop-shadow-sm">${msg.content}</p>
+          <div class="text-[9px] mt-2 opacity-50 font-black uppercase tracking-widest ${isMe ? 'text-right' : 'text-left'}">
             ${this.formatTime(msg.timestamp)}
           </div>
         </div>
@@ -291,26 +288,26 @@ export class MarketChat extends LitElement {
 
   renderOfferForm() {
     return html`
-      <div class="space-y-3 animate-in fade-in slide-in-from-bottom-2">
+      <div class="space-y-4 animate-in fade-in slide-in-from-bottom-2 bg-white/5 border border-white/10 p-4 rounded-2xl mb-4">
         <div class="flex justify-between items-center">
-          <h4 class="text-sm font-bold text-slate-900">Make an offer</h4>
-          <button @click="${() => this.showOfferForm = false}" class="text-xs text-slate-500 hover:text-slate-800 underline">Cancel</button>
+          <h4 class="text-sm font-bold text-white uppercase tracking-widest">Make an offer</h4>
+          <button @click="${() => this.showOfferForm = false}" class="text-xs font-black text-slate-400 hover:text-white uppercase tracking-wider">Cancel</button>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-3">
           <div class="relative flex-1">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-amber-500 font-black text-xs">KSh</span>
             <input 
               type="number" 
-              placeholder="0.00"
-              class="w-full bg-slate-100 border-none rounded-xl pl-7 pr-4 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500"
+              placeholder="0"
+              class="w-full bg-[#0f111a] border border-white/10 rounded-xl pl-12 pr-4 py-3 text-sm font-bold text-white focus:ring-2 focus:ring-amber-500 transition-all shadow-inner"
               .value="${this.offerAmount}"
               @input="${(e: any) => this.offerAmount = e.target.value}"
             />
           </div>
           <button 
-            @click="${() => this.sendMessage(`I'd like to offer $${this.offerAmount} for this.`, 'offer', parseFloat(this.offerAmount))}"
+            @click="${() => this.sendMessage(`I'd like to offer KSh ${parseFloat(this.offerAmount).toLocaleString('en-US')} for this.`, 'offer', parseFloat(this.offerAmount))}"
             ?disabled="${this.isSending || !this.offerAmount}"
-            class="bg-indigo-600 text-white px-6 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100"
+            class="bg-amber-500 text-[#0f111a] px-5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-amber-400 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(245,158,11,0.4)] disabled:opacity-50 disabled:shadow-none"
           >
             Send Offer
           </button>

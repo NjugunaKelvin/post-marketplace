@@ -1,5 +1,17 @@
 [
-  { "id": "user1", "name": "ComicCollector", "createdAt": "2026-04-19T14:38:03.000Z" },
-  { "id": "user2", "name": "ToyTrader", "createdAt": "2026-04-19T14:38:03.000Z" },
-  { "id": "user3", "name": "CardMaster", "createdAt": "2026-04-19T14:38:03.000Z" }
+  {
+    "id": "user1",
+    "name": "CurioMaster",
+    "createdAt": "2026-04-20T15:07:24.987Z"
+  },
+  {
+    "id": "user2",
+    "name": "NairobiAntiques",
+    "createdAt": "2026-04-20T15:07:24.987Z"
+  },
+  {
+    "id": "user3",
+    "name": "HeritageFinds",
+    "createdAt": "2026-04-20T15:07:24.987Z"
+  }
 ]

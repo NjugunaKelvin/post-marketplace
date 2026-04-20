@@ -10,10 +10,7 @@ export class MarketItem extends LitElement {
   }
 
   formatPrice(price: number) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
+    return `KSh ${price.toLocaleString('en-US')}`;
   }
 
   openChat() {
@@ -26,51 +23,52 @@ export class MarketItem extends LitElement {
 
   render() {
     return html`
-      <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300">
+      <div class="group bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden hover:bg-white/10 hover:border-amber-500/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)] transition-all duration-500 flex flex-col h-full">
         <!-- Image Container -->
-        <div class="aspect-[4/3] overflow-hidden relative cursor-pointer" @click="${this.openChat}">
+        <div class="aspect-[4/3] overflow-hidden relative cursor-pointer m-2 rounded-2xl" @click="${this.openChat}">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0f111a]/80 to-transparent z-10 opacity-60"></div>
           <img 
             src="${this.item.image}" 
             alt="${this.item.name}" 
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
           />
-          <div class="absolute top-3 right-3">
-             <span class="bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-700 shadow-sm border border-slate-100 uppercase">
+          <div class="absolute top-3 right-3 z-20">
+             <span class="bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-amber-400 shadow-[0_0_10px_rgba(0,0,0,0.5)] border border-white/10">
                ${this.item.sellerName}
              </span>
           </div>
         </div>
 
         <!-- Content -->
-        <div class="p-5 flex flex-col h-[200px]">
-          <div class="flex justify-between items-start mb-2">
-            <h3 class="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1 cursor-pointer" @click="${this.openChat}">
+        <div class="p-5 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2 cursor-pointer drop-shadow-sm leading-tight" @click="${this.openChat}">
               ${this.item.name}
             </h3>
           </div>
-          <p class="text-sm text-slate-500 line-clamp-2 mb-4">
+          <p class="text-sm text-slate-400 line-clamp-2 mb-6 font-medium leading-relaxed">
             ${this.item.description}
           </p>
 
-          <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
+          <div class="flex items-center justify-between mt-auto pt-5 border-t border-white/10">
             <div class="flex flex-col">
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Price</span>
-              <span class="text-lg font-black text-slate-900 leading-none">${this.formatPrice(this.item.price)}</span>
+              <span class="text-[10px] font-black text-amber-500/70 uppercase tracking-widest mb-1">Price</span>
+              <span class="text-2xl font-black text-white leading-none drop-shadow-md">${this.formatPrice(this.item.price)}</span>
             </div>
             
-            <div class="flex gap-2">
+            <div class="flex gap-3">
               <button 
                 @click="${this.openChat}"
-                class="p-2.5 rounded-xl bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-indigo-600 transition-all border border-transparent hover:border-indigo-100" 
+                class="p-3 rounded-2xl bg-white/5 text-slate-300 hover:bg-amber-500/10 hover:text-amber-400 transition-all border border-white/5 hover:border-amber-500/30" 
                 title="Message Seller"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </button>
               <button 
                 @click="${this.openChat}"
-                class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95"
+                class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white text-sm font-black uppercase tracking-widest hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all active:scale-95 border border-white/10"
               >
                 Buy
               </button>

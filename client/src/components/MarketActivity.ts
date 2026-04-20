@@ -12,16 +12,15 @@ export class MarketActivity extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.mockActivity();
+    this.loadRecentActivity();
   }
 
-  mockActivity() {
-    // Shifting focus to 'Live Activity Feed' feel
+  loadRecentActivity() {
     setTimeout(() => {
       this.activities = [
-        { id: 1, type: 'listing', user: 'ComicCollector', item: 'Vintage Comic Book', time: '2 mins ago' },
-        { id: 2, type: 'sale', user: 'ToyTrader', item: 'Batman Funko Pop', time: '15 mins ago' },
-        { id: 3, type: 'offer', user: 'CardMaster', item: 'Charizard Holo', time: '1 hour ago' }
+        { id: 1, type: 'listing', user: 'CurioMaster', item: 'Hand-Carved Maasai Shield', time: '2 mins ago' },
+        { id: 2, type: 'sale', user: 'NairobiAntiques', item: 'Vintage 1966 Kenya Shilling Coin', time: '15 mins ago' },
+        { id: 3, type: 'offer', user: 'HeritageFinds', item: 'Original Tingatinga Painting', time: '1 hour ago' }
       ];
       this.loading = false;
     }, 500);
@@ -30,27 +29,27 @@ export class MarketActivity extends LitElement {
   render() {
     return html`
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h2 class="text-3xl font-black text-slate-900 mb-8">Recent Activity</h2>
+        <h2 class="text-3xl font-black text-white drop-shadow-sm mb-8 tracking-tight">Recent Activity</h2>
         
-        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
           ${this.loading ? html`
-            <div class="p-10 text-center">
-              <div class="animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent inline-block"></div>
+            <div class="p-15 text-center">
+              <div class="animate-spin rounded-full h-10 w-10 border-4 border-amber-500 border-t-transparent inline-block shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
             </div>
           ` : html`
-            <div class="divide-y divide-slate-100">
+            <div class="divide-y divide-white/10">
               ${this.activities.map(act => html`
-                <div class="p-6 flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center ${act.type === 'sale' ? 'bg-emerald-100 text-emerald-600' : 'bg-indigo-100 text-indigo-600'}">
-                    ${act.type === 'sale' ? html`$`: html`+`}
+                <div class="p-6 flex items-center gap-5 hover:bg-white/5 transition-colors duration-300">
+                  <div class="w-12 h-12 rounded-full flex items-center justify-center border font-black text-lg ${act.type === 'sale' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : 'bg-amber-500/20 text-amber-500 border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)]'}">
+                    ${act.type === 'sale' ? html`KSh`: html`+`}
                   </div>
                   <div class="flex-1">
-                    <p class="text-sm text-slate-900 font-medium">
-                      <span class="font-bold">${act.user}</span> 
+                    <p class="text-[15px] text-slate-300 font-medium leading-relaxed">
+                      <span class="font-black text-white">${act.user}</span> 
                       ${act.type === 'sale' ? 'sold' : act.type === 'offer' ? 'made an offer on' : 'listed'} 
-                      <span class="font-bold">${act.item}</span>
+                      <span class="font-black text-amber-400">${act.item}</span>
                     </p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">${act.time}</p>
+                    <p class="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">${act.time}</p>
                   </div>
                 </div>
               `)}

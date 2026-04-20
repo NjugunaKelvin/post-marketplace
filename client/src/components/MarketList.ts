@@ -51,8 +51,8 @@ export class MarketList extends LitElement {
     if (this.loading && this.items.length === 0) {
       return html`
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent"></div>
-          <p class="mt-4 text-slate-500 font-medium">Loading the latest collectibles...</p>
+          <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-amber-500 border-t-transparent shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
+          <p class="mt-6 text-slate-400 font-medium tracking-wide">Uncovering rare artifacts...</p>
         </div>
       `;
     }
@@ -60,7 +60,7 @@ export class MarketList extends LitElement {
     if (this.error) {
        return html`
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <div class="bg-red-50 text-red-600 p-4 rounded-xl inline-block">
+          <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-2xl inline-block shadow-lg">
             ${this.error}
           </div>
         </div>
@@ -70,8 +70,8 @@ export class MarketList extends LitElement {
     if (this.items.length === 0) {
       return html`
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h3 class="text-xl font-bold text-slate-900 mb-2">No items found</h3>
-          <p class="text-slate-500">I couldn't find anything matching "${this.searchQuery}". Try a different keyword.</p>
+          <h3 class="text-2xl font-black text-white mb-3">No artifacts found</h3>
+          <p class="text-slate-400 text-lg">We couldn't unearth anything matching "${this.searchQuery}".</p>
         </div>
       `;
     }
