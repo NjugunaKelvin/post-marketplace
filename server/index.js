@@ -174,7 +174,7 @@ app.get(['/', '/messages', '/activity'], (req, res) => {
     components.push({ name: 'market-inbox', props: '' });
   } else if (path === '/activity') {
     title = 'Activity | Post.';
-    // We could add an activity component here later
+    components.push({ name: 'market-activity', props: '' });
   } else {
     // Default home view
     components.push({ name: 'market-search', props: '' });
