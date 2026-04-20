@@ -1,10 +1,8 @@
 # Architecture Decision Records (ADR)
 
-This document tracks the major technical decisions I made while building the Post. Social Marketplace. I'll be updating this as the project progresses.
+This document tracks the major technical decisions I made while building the Post interactive marketplace.
 
-## 1. Hybrid Architecture (EJS + Lit)
+Hybrid Architecture Decision
+The core requirements called for a mix of server-side shells (EJS) and interactive client components (Lit). I chose to implement a Hybrid Shell approach. The Express server renders the main page structure via EJS, but cleanly delegates complex interactive areas like the live search, checkout flows, and HTTP Polling mechanisms to Lit web components.
 
-- **Context**: The requirements called for a mix of server-side shells (EJS) and interactive client components (Lit).
-- **Decision**: I'm using a Hybrid Shell approach. The Express server renders the main page structure via EJS, but delegates complex interactive areas—like the live search and messaging—to Lit web components.
-- **Rationale**: This gives the app the speed and SEO of a server-rendered site while keeping the interactive parts modular and easy to manage with TypeScript and Lit.
-- **Tradeoffs**: It adds a bit of complexity to the build process (using Vite to bundle into the Express assets), but the developer experience and performance gains are worth it.
+This design gives the application incredible loading speed and native SEO capabilities inherent to server-rendered sites, while keeping the highly interactive stateful parts modular and strictly typed using TypeScript. It adds slight complexity to the build tooling by requiring Vite to bundle the static scripts directly into the Express public asset pipeline, but the resulting developer experience and premium user interface optimizations make the tradeoff completely worth it.
